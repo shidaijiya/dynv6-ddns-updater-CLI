@@ -150,5 +150,5 @@ dynv6-ddns-updater-CLI.exe --domain yourdomain.dynv6.net --token your_token --up
 
 ## 🙏 鸣谢
 
-特别感谢优秀开源项目 [[ddns-go](https://github.com/jeessy2/ddns-go)](https://github.com/jeessy2/ddns-go) 及其同类项目带来的启发！
+特别感谢优秀开源项目 [ddns-go](https://github.com/jeessy2/ddns-go) 及其同类型项目带来的启发！
 
