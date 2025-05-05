@@ -174,7 +174,7 @@ def main():
 
 
     if not Path(secrets_file_path).exists():
-        log_print("Fatal Error!Log doesn't exist!", "ERROR")
+        log_print("Fatal Error!config doesn't exist!", "ERROR")
         exit(1)
 
 
