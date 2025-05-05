@@ -1,0 +1,5 @@
+ipaddress
+psutil
+portalocker
+dnspython
+requests
