@@ -112,7 +112,7 @@ python run.py --token <your_token> --domain <yourdomain.dynv6.net> --update_type
 ### 示例（首次运行）
 
 ```bash
-dynv6-ddns-updater-CLI.exe --domain yourdomain.dynv6.net --token your_token --update_type both --update_interval 600
+dynv6-ddns-updater-CLI.exe --domain yourdomain.dynv6.net --token your_token --update_type both --update_interval 3600
 ```
 
 ### 设置自动启动
