@@ -1,5 +1,7 @@
 # 警告此依赖仅可以运行在windows
 import os
+import sys
+os.chdir(os.path.dirname(os.path.abspath(sys.argv[0])))
 import tempfile
 from pathlib import Path
 import portalocker

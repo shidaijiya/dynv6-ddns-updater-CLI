@@ -1,5 +1,7 @@
-import argparse
 import os
+import sys
+os.chdir(os.path.dirname(os.path.abspath(sys.argv[0])))
+import argparse
 import tempfile
 import time
 from pathlib import Path
@@ -13,7 +15,7 @@ from lib.security import encrypt_token, decrypt_token
 
 
 
-secrets_file_path = os.path.join(os.path.dirname(__file__), "ddns-secrets.bin")
+secrets_file_path = "ddns-secrets.bin"
 
 
 
