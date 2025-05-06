@@ -42,23 +42,25 @@ def process_does_not_exist():
                 lock_file_pid = int(content)
         except Exception as e:
             log_print(f"Can't read lock file: {e}", "WARNING")
-            exit(0)
+            return False, 1
 
 
         if pid_exists(lock_file_pid):
             log_print("Process already exists...Exiting current process", "INFO")
-            exit(0)
+            return False, 2
         else:
             log_print("Previous process exited unexpectedly...lock file has been removed.", "WARNING")
             try:
                 os.remove(LOCK_FILE_PATH)
             except Exception as e:
                 log_print(f"Failed to remove lock file: {e}", "WARNING")
-                exit(1)
+                return False, 1
 
 
     if not make_lock_file():
         log_print("Anther instance is running, can't unlock lock file", "INFO")
-        exit(0)
+        return False, 2
+
+    return True, True
 
 

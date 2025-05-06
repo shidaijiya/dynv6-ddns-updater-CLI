@@ -16,6 +16,8 @@ from lib.security import encrypt_token, decrypt_token
 
 
 secrets_file_path = "ddns-secrets.bin"
+LOCK_FILE = "dynv6-update.lock"
+LOCK_FILE_PATH = os.path.join(tempfile.gettempdir(), LOCK_FILE)
 
 
 
@@ -156,8 +158,15 @@ def main():
                 log_print("Missing required parameters for single update，Exiting...", "ERROR")
                 exit(1)
 
-        # 不为单次运行再创建锁文件
-        process_does_not_exist()
+
+        process_exist, exit_code = process_does_not_exist()
+        if not process_exist:
+            if exit_code != 2 and Path(LOCK_FILE_PATH).exists():
+                os.remove(LOCK_FILE_PATH)
+                log_print("Lock file cleaned", "INFO")
+
+            exit(exit_code)
+
         if not (args.domain and args.token and args.update_type):
             log_print("Missing required parameters，Exiting...", "ERROR")
             exit(1)
@@ -214,12 +223,23 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         log_print(f"Program exception: {e}", "ERROR")
+
     finally:
-        LOCK_FILE = "dynv6-update.lock"
-        LOCK_FILE_PATH = os.path.join(tempfile.gettempdir(), LOCK_FILE)
-        if Path(LOCK_FILE_PATH).exists():
-            os.remove(LOCK_FILE_PATH)
-            log_print("Lock file cleaned", "INFO")
+        try:
+            if Path(LOCK_FILE_PATH).exists():
+                with open(LOCK_FILE_PATH, "r") as f:
+                    lock_file_pid = int(f.read().strip())
+                if lock_file_pid == os.getpid():
+                    os.remove(LOCK_FILE_PATH)
+                    log_print("Lock file cleaned (fallback in finally)", "INFO")
+        except Exception as e:
+            log_print(f"Finally cleanup failed: {e}", "WARNING")
+
+
+
+
+
+
 
 
 
